@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,7 +26,9 @@ public class FrontControllerServlet extends HttpServlet {
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         UrlParser urlParser = new UrlParser();
+        PrintWriter writer = resp.getWriter();
         String actionName = urlParser.parsing(req.getRequestURI());
-        uriToAction.get(actionName);
+        writer.println(req.getRequestURI());
+        uriToAction.get(actionName).run(req,resp);
     }
 }
